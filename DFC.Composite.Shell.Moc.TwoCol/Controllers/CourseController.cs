@@ -8,10 +8,9 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
 {
     public class CourseController : Controller
     {
-        public const string FilterMine = "Mine";
         public const string FilterThisMonth = "ThisMonth";
         public const string FilterNextMonth = "NextMonth";
-        public static readonly List<string> Filters = new List<string> { FilterMine, FilterThisMonth, FilterNextMonth };
+        public static readonly List<string> Filters = new List<string> { FilterThisMonth, FilterNextMonth };
 
         private readonly ICourseService _courseService;
 
