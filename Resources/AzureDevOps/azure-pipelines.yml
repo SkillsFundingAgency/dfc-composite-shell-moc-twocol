@@ -1,5 +1,5 @@
 variables:
-  SolutionBaseName: ''
+  SolutionBaseName: 'dfc-composite-shell-moc-twocol'
   BuildPlatform: 'any cpu'
   BuildConfiguration: 'release'
 
@@ -18,6 +18,8 @@ steps:
    displayName: 'dotnet build'
    inputs:
      command: 'build'
+
+     # test and publish
  - task: DotNetCoreCLI@2
    displayName: dotnet test
    inputs:
@@ -28,11 +30,12 @@ steps:
    displayName: dotnet publish
    inputs:
     command: publish
-    projects: '**/*.csproj'
+    projects: 'DFC.Composite.Shell.Moc.TwoCol\DFC.Composite.Shell.Moc.TwoCol.csproj'
     configuration: ${{ variables.buildConfiguration }}
     arguments: '--output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
     publishWebProjects: false
+
  - task: CopyFiles@2
    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
    inputs:
