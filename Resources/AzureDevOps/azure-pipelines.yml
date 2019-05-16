@@ -19,12 +19,23 @@ steps:
    inputs:
      command: 'build'
      arguments: '-o "$(build.artifactstagingdirectory)\Build\\"'
- - task: ArchiveFiles@2
-   displayName: ArchiveFunctionApp
-   inputs: 
-     rootFolderOrFile: $(build.artifactstagingdirectory)\Build\
-     archiveFile: $(build.artifactstagingdirectory)\DeploymentPackages\$(SolutionBaseName).zip
-     includeRootFolder: false
+
+     # test and publish
+ - task: DotNetCoreCLI@2
+   displayName: dotnet test
+   inputs:
+    command: test
+    projects: '**/*.csproj'
+    configuration: ${{ variables.buildConfiguration }}
+ - task: DotNetCoreCLI@2
+   displayName: dotnet publish
+   inputs:
+    command: publish
+    projects: '**/*.csproj'
+    configuration: ${{ variables.buildConfiguration }}
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
  - task: CopyFiles@2
    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
    inputs:
