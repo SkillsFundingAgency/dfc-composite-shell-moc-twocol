@@ -18,7 +18,6 @@ steps:
    displayName: 'dotnet build'
    inputs:
      command: 'build'
-     arguments: '-o "$(build.artifactstagingdirectory)\Build\\"'
 
      # test and publish
  - task: DotNetCoreCLI@2
