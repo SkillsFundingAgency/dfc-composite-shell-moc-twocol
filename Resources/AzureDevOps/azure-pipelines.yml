@@ -35,6 +35,7 @@ steps:
     configuration: ${{ variables.buildConfiguration }}
     arguments: '--output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
+    publishWebProjects: false
 
  - task: CopyFiles@2
    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
