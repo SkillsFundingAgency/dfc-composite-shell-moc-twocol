@@ -1,31 +1,39 @@
 variables:
-    SolutionBaseName: 'DFC.Composite.Shell'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+  SolutionBaseName: 'dfc-composite-shell-moc-twocol'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
 
-resources:
-  repositories:
-  - repository: self
-  - repository: dfc-devops
-    type: github
-    name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.1.1
-    endpoint: 'GitHub (ESFA)'
-
-jobs:
-
-# Build the app with the dfc-dotnetcore-build template.  Runs if the output of TestBranchName is Version2+
-- job: BuildDotNetStandard
-  displayName: Build-DotNetStandard
-  pool:
-    name: Continuous Integration 02 - SSD - 160ACU
-    demands:
-    - msbuild
-    - visualstudio
-
-  steps:
-  - template: AzureDevOpsTemplates/Build/dfc-dotnetcorefunctionapp-build-notests.yml@dfc-devops
-    parameters:
-      SolutionBaseName: $(SolutionBaseName)
-      BuildPlatform: $(BuildPlatform)
-      BuildConfiguration: $(BuildConfiguration)
+steps:
+ - task: gittools.gitversion.gitversion-task.GitVersion@4
+   displayName: GitVersion
+   inputs:
+     preferBundledVersion: false
+ - task: NuGetToolInstaller@0
+   displayName: 'Use NuGet 4.3.0'
+ - task: NuGetCommand@2
+   displayName: 'NuGet restore ${{ variables.SolutionBaseName }}.sln'
+   inputs:
+     restoreSolution: '${{ variables.SolutionBaseName }}.sln'
+ - task: DotNetCoreCLI@2
+   displayName: 'dotnet build'
+   inputs:
+     command: 'build'
+     arguments: '-o "$(build.artifactstagingdirectory)\Build\\"'
+ - task: ArchiveFiles@2
+   displayName: ArchiveFunctionApp
+   inputs: 
+     rootFolderOrFile: $(build.artifactstagingdirectory)\Build\
+     archiveFile: $(build.artifactstagingdirectory)\DeploymentPackages\$(SolutionBaseName).zip
+     includeRootFolder: false
+ - task: CopyFiles@2
+   displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
+   inputs:
+     sourceFolder: 'Resources'
+     contents: '**'
+     targetFolder: '$(build.artifactstagingdirectory)/Azure'
+ - task: PublishBuildArtifacts@1
+   displayName: 'Publish Artifact: ${{ variables.SolutionBaseName }}'
+   inputs:
+     pathtoPublish: $(build.artifactstagingdirectory)
+     artifactName: ${{ variables.SolutionBaseName }}
+     publishLocation: container
