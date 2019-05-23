@@ -20,6 +20,14 @@ steps:
      command: 'build'
 
      # test and publish
+
+ - task: UseDotNet@2
+   displayName: 'Use .NET Core sdk'
+   inputs:
+     packageType: sdk
+     version: 2.2.x
+     installationPath: $(Agent.ToolsDirectory)/dotnet
+
  - task: DotNetCoreCLI@2
    displayName: dotnet test
    inputs:
