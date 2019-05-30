@@ -1,32 +1,53 @@
-
 variables:
-    SolutionBaseName: 'DFC.Composite.Shell.Moc.TwoCol'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+  SolutionBaseName: 'DFC.Composite.Shell.Moc.TwoCol'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
 
-resources:
-  repositories:
-  - repository: self
-  - repository: dfc-devops
-    type: github
-    name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.1.1
-    endpoint: 'GitHub (ESFA)'
+steps:
+ - task: gittools.gitversion.gitversion-task.GitVersion@4
+   displayName: GitVersion
+   inputs:
+     preferBundledVersion: false
+ 
+ - task: DotNetCoreCLI@2
+   displayName: 'dotnet build'
+   inputs:
+     command: 'build'
 
-jobs:
+     # test and publish
 
-# Build the app with the dfc-dotnetcore-build template.  Runs if the output of TestBranchName is Version2+
-- job: BuildDotNetStandard
-  displayName: Build-DotNetStandard
-  pool:
-    name: Continuous Integration 02 - SSD - 160ACU
-    demands:
-    - msbuild
-    - visualstudio
+ - task: UseDotNet@2
+   displayName: 'Use .NET Core sdk'
+   inputs:
+     packageType: sdk
+     version: 2.2.x
+     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-  steps:
-  - template: AzureDevOpsTemplates/Build/dfc-dotnetcorefunctionapp-build-notests.yml@dfc-devops
-    parameters:
-      SolutionBaseName: $(SolutionBaseName)
-      BuildPlatform: $(BuildPlatform)
-      BuildConfiguration: $(BuildConfiguration)
+ - task: DotNetCoreCLI@2
+   displayName: dotnet test
+   inputs:
+    command: test
+    projects: '**/*.csproj'
+    configuration: ${{ variables.buildConfiguration }}
+ - task: DotNetCoreCLI@2
+   displayName: dotnet publish
+   inputs:
+    command: publish
+    projects: 'DFC.Composite.Shell.Moc.TwoCol\DFC.Composite.Shell.Moc.TwoCol.csproj'
+    configuration: ${{ variables.buildConfiguration }}
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+    publishWebProjects: false
+
+ - task: CopyFiles@2
+   displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Azure'
+   inputs:
+     sourceFolder: 'Resources'
+     contents: '**'
+     targetFolder: '$(build.artifactstagingdirectory)/Azure'
+ - task: PublishBuildArtifacts@1
+   displayName: 'Publish Artifact: ${{ variables.SolutionBaseName }}'
+   inputs:
+     pathtoPublish: $(build.artifactstagingdirectory)
+     artifactName: ${{ variables.SolutionBaseName }}
+     publishLocation: container
