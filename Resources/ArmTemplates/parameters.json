@@ -9,6 +9,9 @@
       "CompositeUiSharedStorageAccountName": {
           "value": "__CompositeUiSharedStorageAccountName__"
       },
+      "appServiceName": {
+        "value": "__appServiceName__"
+      },
       "Environment": {
           "value": "__ReleaseEnvironmentName__",
           "metadata": {
