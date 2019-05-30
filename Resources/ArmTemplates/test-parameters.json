@@ -7,7 +7,7 @@
           "value": "dfc-dev-compui-shared-rg"
       },
       "appServiceName": {
-        "value": "__appServiceName__"
+        "value": "dfc-dev-compui-shell-moc-twocol-as"
       },
       "CompositeUiSharedStorageAccountName": {
           "value": "dfcdevcompuisharedstr"
