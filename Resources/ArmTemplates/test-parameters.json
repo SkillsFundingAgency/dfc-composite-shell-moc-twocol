@@ -6,6 +6,9 @@
       "CompositeUiSharedResourceGroup": {
           "value": "dfc-dev-compui-shared-rg"
       },
+      "appServiceName": {
+        "value": "__appServiceName__"
+      },
       "CompositeUiSharedStorageAccountName": {
           "value": "dfcdevcompuisharedstr"
       },
