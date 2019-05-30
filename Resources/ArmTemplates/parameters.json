@@ -1,18 +1,25 @@
+
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "appServiceName": {
-        "value": "dfc-foo-compshellmoc2"
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "CompositeUiSharedResourceGroup": {
+          "value": "__CompositeUiSharedResourceGroup__"
       },
-      "appServicePlanName": {
-        "value": "dfc-foo-shared-asp"
+      "CompositeUiSharedStorageAccountName": {
+          "value": "__CompositeUiSharedStorageAccountName__"
       },
-      "appServicePlanResourceGroup": {
-        "value": "dfc-foo-shared-rg"
+      "Environment": {
+          "value": "__ReleaseEnvironmentName__",
+          "metadata": {
+              "comment": "Bug in tokenisation task prevents referencing Release.EnvironmentName directly.  https://github.com/TotalALM/VSTS-Tasks/issues/29"
+          }
       },
-      "storageConnectionString": {
-        "value": "DefaultEndpointsProtocol=https;AccountName=dfcfooprovstr;AccountKey=this_is_not_a_real_account==;EndpointSuffix=core.windows.net"
+      "SharedAppServicePlanName": {
+          "value": "__SharedAppServicePlanName__"
+      },
+      "SharedAppServicePlanResourceGroup": {
+          "value": "__CompositeUiSharedResourceGroup__"
       }
-    }
   }
+}
