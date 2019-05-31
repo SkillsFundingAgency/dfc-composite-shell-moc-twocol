@@ -21,6 +21,30 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        public IActionResult Head()
+        {
+            var vm = new HeadViewModel();
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult BodyTop()
+        {
+            var vm = new BodyTopViewModel();
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Breadcrumb()
+        {
+            var vm = new BreadcrumbViewModel();
+
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult Index(string category, string filter, string searchClue)
         {
             var vm = new CourseIndexViewModel();
@@ -33,12 +57,31 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
-        public IActionResult Sidebar()
+        public IActionResult SidebarLeft()
         {
             var vm = new SidebarViewModel
             {
                 Categories = _courseService.GetCategories()
             };
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult SidebarRight()
+        {
+            var vm = new SidebarViewModel
+            {
+                Categories = _courseService.GetCategories()
+            };
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult BodyFooter()
+        {
+            var vm = new BodyFooterViewModel();
 
             return View(vm);
         }
@@ -69,12 +112,6 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
             }
 
             return View(search);
-        }
-
-        [HttpGet]
-        public IActionResult Navbar()
-        {
-            return View();
         }
 
         [HttpGet]
