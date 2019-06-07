@@ -82,7 +82,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 );
                 routes.MapRoute(
                     name: $"Course-Index-Search",
-                    template: "Course/{searchClue}",
+                    template: "Course/{searchClue?}",
                     defaults: new { controller = "Course", action = "Index" }
                 );
 
@@ -96,7 +96,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 // add the default route
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Error}");
             });
         }
 
