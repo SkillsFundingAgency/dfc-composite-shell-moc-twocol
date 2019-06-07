@@ -1,5 +1,4 @@
-﻿using DFC.Composite.Shell.Moc.TwoCol.Models.Registration;
-using DFC.Composite.Shell.Moc.TwoCol.Services;
+﻿using DFC.Composite.Shell.Moc.TwoCol.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,8 +20,6 @@ namespace DFC.Composite.Shell.Moc.TwoCol
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureApplicationRegistration(services);
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -55,6 +52,13 @@ namespace DFC.Composite.Shell.Moc.TwoCol
 
             app.UseMvc(routes =>
             {
+                // add the breadcrumb routing
+                routes.MapRoute(
+                    name: $"Breadcrumb-Action",
+                    template: "Course/Breadcrumb/{**data}",
+                    defaults: new { controller = "Course", action = "Breadcrumb" }
+                );
+
                 // add the courses routing
                 routes.MapRoute(
                     name: $"Course-Index-Category",
@@ -78,7 +82,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 );
                 routes.MapRoute(
                     name: $"Course-Index-Search",
-                    template: "Course/{searchClue}",
+                    template: "Course/{searchClue?}",
                     defaults: new { controller = "Course", action = "Index" }
                 );
 
@@ -92,17 +96,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 // add the default route
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Error}");
             });
-        }
-
-        private void ConfigureApplicationRegistration(IServiceCollection services)
-        {
-            var applicationRegistration = Configuration.GetSection("ApplicationRegistration").Get<ApplicationRegistration>();
-
-            services.AddSingleton(applicationRegistration);
-
-            services.AddAsyncInitializer<RegisterApplicationInitialiser>();
         }
 
     }

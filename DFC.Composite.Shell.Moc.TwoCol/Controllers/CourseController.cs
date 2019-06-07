@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DFC.Composite.Shell.Moc.TwoCol.Data;
 using DFC.Composite.Shell.Moc.TwoCol.Models;
 using DFC.Composite.Shell.Moc.TwoCol.Services;
@@ -20,6 +21,48 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        public IActionResult Head()
+        {
+            var vm = new HeadViewModel();
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult BodyTop()
+        {
+            var vm = new BodyTopViewModel();
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Breadcrumb(string data)
+        {
+            string[] paths = null;
+            string thisLocation = null;
+
+            if (!string.IsNullOrEmpty(data))
+            {
+                paths = data.Split('/');
+
+                if (paths.Length > 0)
+                {
+                    thisLocation = paths[paths.Length - 1];
+                    paths = new ArraySegment<string>(paths, 0, paths.Length - 1).ToArray();
+                }
+            }
+
+            var viewModel = new BreadcrumbViewModel()
+            {
+                Paths = paths,
+                ThisLocation = thisLocation
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         public IActionResult Index(string category, string filter, string searchClue)
         {
             var vm = new CourseIndexViewModel();
@@ -32,12 +75,31 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
-        public IActionResult Sidebar()
+        public IActionResult SidebarLeft()
         {
             var vm = new SidebarViewModel
             {
                 Categories = _courseService.GetCategories()
             };
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult SidebarRight()
+        {
+            var vm = new SidebarViewModel
+            {
+                Categories = _courseService.GetCategories()
+            };
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult BodyFooter()
+        {
+            var vm = new BodyFooterViewModel();
 
             return View(vm);
         }
@@ -68,12 +130,6 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
             }
 
             return View(search);
-        }
-
-        [HttpGet]
-        public IActionResult Navbar()
-        {
-            return View();
         }
 
         [HttpGet]
