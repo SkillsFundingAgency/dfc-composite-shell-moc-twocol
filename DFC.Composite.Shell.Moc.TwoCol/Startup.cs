@@ -96,7 +96,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 // add the default route
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Error}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
