@@ -52,6 +52,13 @@ namespace DFC.Composite.Shell.Moc.TwoCol
 
             app.UseMvc(routes =>
             {
+                // add the breadcrumb routing
+                routes.MapRoute(
+                    name: $"Breadcrumb-Action",
+                    template: "Course/Breadcrumb/{**data}",
+                    defaults: new { controller = "Course", action = "Breadcrumb" }
+                );
+
                 // add the courses routing
                 routes.MapRoute(
                     name: $"Course-Index-Category",
@@ -75,7 +82,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 );
                 routes.MapRoute(
                     name: $"Course-Index-Search",
-                    template: "Course/{searchClue}",
+                    template: "Course/{searchClue?}",
                     defaults: new { controller = "Course", action = "Index" }
                 );
 
@@ -89,7 +96,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol
                 // add the default route
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Error}");
             });
         }
 
