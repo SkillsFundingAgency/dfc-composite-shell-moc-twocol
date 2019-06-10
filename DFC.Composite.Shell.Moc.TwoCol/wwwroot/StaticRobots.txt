@@ -1,0 +1,1 @@
+﻿// this is the TwoCol default robots.txt
