@@ -52,13 +52,6 @@ namespace DFC.Composite.Shell.Moc.TwoCol
 
             app.UseMvc(routes =>
             {
-                // add the breadcrumb routing
-                routes.MapRoute(
-                    name: $"Breadcrumb-Action",
-                    template: "Course/Breadcrumb/{**data}",
-                    defaults: new { controller = "Course", action = "Breadcrumb" }
-                );
-
                 // add the courses routing
                 routes.MapRoute(
                     name: $"Course-Index-Category",

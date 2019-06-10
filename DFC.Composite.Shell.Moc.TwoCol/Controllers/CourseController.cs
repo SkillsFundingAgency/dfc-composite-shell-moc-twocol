@@ -37,6 +37,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("Course/Breadcrumb/{**data}")]
         public IActionResult Breadcrumb(string data)
         {
             string[] paths = null;
