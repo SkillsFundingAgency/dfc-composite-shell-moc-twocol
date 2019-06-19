@@ -25,7 +25,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         {
             var vm = new HeadViewModel
             {
-                Title = nameof(Head),
+                Title = string.IsNullOrWhiteSpace(data) ? "Index" : data,
                 Contents = null
             };
 
