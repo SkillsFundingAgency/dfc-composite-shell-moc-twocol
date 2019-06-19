@@ -1,7 +1,7 @@
 ﻿@model CourseEditViewModel
 
 @{
-    ViewData["Title"] = "Edit Course";
+    ViewData["Title"] = Model.Title;
 }
 
 <form asp-action="Edit">
@@ -37,3 +37,7 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

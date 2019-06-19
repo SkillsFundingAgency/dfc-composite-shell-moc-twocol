@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using DFC.Composite.Shell.Moc.TwoCol.Data;
 using DFC.Composite.Shell.Moc.TwoCol.Models;
 using DFC.Composite.Shell.Moc.TwoCol.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +23,11 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         [Route("course/head/{**data}")]
         public IActionResult Head(string data)
         {
-            var vm = new HeadViewModel();
+            var vm = new HeadViewModel
+            {
+                Title = nameof(Head),
+                Contents = null
+            };
 
             return View(vm);
         }
@@ -34,7 +36,11 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         [Route("course/bodytop/{**data}")]
         public IActionResult BodyTop(string data)
         {
-            var vm = new BodyTopViewModel();
+            var vm = new BodyTopViewModel
+            {
+                Title = nameof(BodyTop),
+                Contents = null
+            };
 
             return View(vm);
         }
@@ -43,7 +49,10 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         [Route("course/breadcrumb/{**data}")]
         public IActionResult Breadcrumb(string data)
         {
-            var vm = new BreadcrumbViewModel();
+            var vm = new BreadcrumbViewModel()
+            {
+                Title = nameof(Breadcrumb)
+            };
 
             if (!string.IsNullOrWhiteSpace(data))
             {
@@ -74,9 +83,12 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         [HttpGet]
         public IActionResult Index(string category, string filter, string searchClue)
         {
-            var vm = new CourseIndexViewModel();
             bool filterThisMonth = (string.Compare(filter, FilterThisMonth, true) == 0);
             bool filterNextMonth = (string.Compare(filter, FilterNextMonth, true) == 0);
+            var vm = new CourseIndexViewModel()
+            {
+                Title = nameof(Index)
+            };
 
             vm.Courses = _courseService.GetCourses(category, filterThisMonth, filterNextMonth, searchClue);
 
@@ -89,6 +101,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         {
             var vm = new SidebarViewModel
             {
+                Title = nameof(SidebarLeft),
                 Categories = _courseService.GetCategories()
             };
 
@@ -101,6 +114,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         {
             var vm = new SidebarViewModel
             {
+                Title = nameof(SidebarRight),
                 Categories = _courseService.GetCategories()
             };
 
@@ -111,7 +125,11 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         [Route("course/bodyfooter/{**data}")]
         public IActionResult BodyFooter(string data)
         {
-            var vm = new BodyFooterViewModel();
+            var vm = new BodyFooterViewModel
+            {
+                Title = nameof(BodyFooter),
+                Contents = null
+            };
 
             return View(vm);
         }
@@ -124,7 +142,10 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
                 return RedirectToAction(nameof(Index), new { searchClue });
             }
 
-            var vm = new SearchViewModel();
+            var vm = new SearchViewModel()
+            {
+                Title = nameof(Search)
+            };
 
             return View(vm);
         }
@@ -140,6 +161,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
                     return RedirectToAction(nameof(Index), new { searchClue = search.Clue });
                 }
             }
+
+            search.Title = nameof(Search);
 
             return View(search);
         }

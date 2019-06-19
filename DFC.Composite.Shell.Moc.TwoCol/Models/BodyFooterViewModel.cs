@@ -1,6 +1,6 @@
 ﻿namespace DFC.Composite.Shell.Moc.TwoCol.Models
 {
-    public class BodyFooterViewModel
+    public class BodyFooterViewModel : BaseViewModel
     {
     }
 }

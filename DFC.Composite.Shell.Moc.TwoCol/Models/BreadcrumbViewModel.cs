@@ -2,9 +2,8 @@
 
 namespace DFC.Composite.Shell.Moc.TwoCol.Models
 {
-    public class BreadcrumbViewModel
+    public class BreadcrumbViewModel : BaseViewModel
     {
-        public string Title { get; set; } = "Unknown course";
         public IList<BreadcrumbPathViewModel> Paths { get; set; }
     }
 }

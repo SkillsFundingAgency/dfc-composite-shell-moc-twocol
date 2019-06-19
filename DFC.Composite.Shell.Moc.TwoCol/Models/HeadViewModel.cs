@@ -1,6 +1,6 @@
 ﻿namespace DFC.Composite.Shell.Moc.TwoCol.Models
 {
-    public class HeadViewModel
+    public class HeadViewModel : BaseViewModel
     {
     }
 }
