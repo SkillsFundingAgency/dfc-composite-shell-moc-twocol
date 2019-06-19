@@ -22,6 +22,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("course/head/{**data}")]
         public IActionResult Head(string data)
         {
             var vm = new HeadViewModel();
@@ -30,6 +31,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("course/bodytop/{**data}")]
         public IActionResult BodyTop(string data)
         {
             var vm = new BodyTopViewModel();
@@ -38,7 +40,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
-        [Route("Course/Breadcrumb/{**data}")]
+        [Route("course/breadcrumb/{**data}")]
         public IActionResult Breadcrumb(string data)
         {
             var vm = new BreadcrumbViewModel();
@@ -82,6 +84,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("course/sidebarleft/{**data}")]
         public IActionResult SidebarLeft(string data)
         {
             var vm = new SidebarViewModel
@@ -93,6 +96,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("course/sidebarright/{**data}")]
         public IActionResult SidebarRight(string data)
         {
             var vm = new SidebarViewModel
@@ -104,6 +108,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        [Route("course/bodyfooter/{**data}")]
         public IActionResult BodyFooter(string data)
         {
             var vm = new BodyFooterViewModel();
