@@ -51,12 +51,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         {
             var vm = new BreadcrumbViewModel()
             {
-                Title = nameof(Breadcrumb)
-            };
-
-            if (!string.IsNullOrWhiteSpace(data))
-            {
-                vm.Paths = new List<BreadcrumbPathViewModel>() {
+                Title = data,
+                Paths = new List<BreadcrumbPathViewModel>() {
                     new BreadcrumbPathViewModel()
                     {
                         Route = "/",
@@ -66,13 +62,19 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
                     {
                         Route = "/course/index",
                         Title = "Courses"
-                    },
+                    }
+                }
+            };
+
+            if (!string.IsNullOrWhiteSpace(data))
+            {
+                vm.Paths.Add(
                     new BreadcrumbPathViewModel()
                     {
                         Route = $"/course/{data}",
                         Title = data
                     }
-                };
+                );
 
                 vm.Paths.Last().IsLastItem = true;
             }
