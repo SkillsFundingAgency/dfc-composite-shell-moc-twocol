@@ -98,6 +98,12 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
         }
 
         [HttpGet]
+        public IActionResult Health()
+        {
+            return Ok();
+        }
+
+        [HttpGet]
         [Route("course/sidebarleft/{**data}")]
         public IActionResult SidebarLeft(string data)
         {
