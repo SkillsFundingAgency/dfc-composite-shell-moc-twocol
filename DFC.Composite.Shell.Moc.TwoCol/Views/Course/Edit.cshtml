@@ -4,7 +4,7 @@
     ViewData["Title"] = Model.Title;
 }
 
-<form asp-action="Edit">
+<form asp-action="/Course/Edit">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)
 
