@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DFC.Composite.Shell.Moc.TwoCol.Models;
+﻿using DFC.Composite.Shell.Moc.TwoCol.Models;
 using DFC.Composite.Shell.Moc.TwoCol.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
 {
@@ -160,6 +160,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("course/search")]
+        [Route("/search")]
         public IActionResult Search(SearchViewModel search)
         {
             if (ModelState.IsValid)
@@ -186,6 +188,7 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
                 Description = model.Description,
                 Start = model.Start,
                 MaxAttendeeCount = model.MaxAttendeeCount,
+                City = model.City,
                 Category = model.Category
             };
 
@@ -194,6 +197,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("course/edit")]
+        [Route("/edit")]
         public IActionResult Edit(CourseEditViewModel course)
         {
             if (ModelState.IsValid)
