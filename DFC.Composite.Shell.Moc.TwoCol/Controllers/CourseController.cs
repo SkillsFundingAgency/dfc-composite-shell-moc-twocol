@@ -1,5 +1,6 @@
 ﻿using DFC.Composite.Shell.Moc.TwoCol.Models;
 using DFC.Composite.Shell.Moc.TwoCol.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
                 Title = string.IsNullOrWhiteSpace(data) ? "Index" : data,
                 Contents = null
             };
+
+            PopulateVisits(vm);
 
             return View(vm);
         }
@@ -93,6 +96,8 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
             };
 
             vm.Courses = _courseService.GetCourses(category, filterThisMonth, filterNextMonth, searchClue);
+
+            PopulateVisits(vm);
 
             return View(vm);
         }
@@ -207,6 +212,19 @@ namespace DFC.Composite.Shell.Moc.TwoCol.Controllers
             }
 
             return View(course);
+        }
+
+        private void PopulateVisits(BaseViewModel baseViewModel)
+        {
+            var visitsBodyKey = "VisitsBody";
+            var visitsBody = HttpContext.Session.GetInt32(visitsBodyKey) ?? 0;
+            HttpContext.Session.SetInt32(visitsBodyKey, visitsBody + 1);
+            baseViewModel.VisitsBody = visitsBody + 1;
+
+            var visitsFooterKey = "VisitsFooter";
+            var visitsFooter = HttpContext.Session.GetInt32(visitsFooterKey) ?? 0;
+            HttpContext.Session.SetInt32(visitsFooterKey, visitsFooter + 1);
+            baseViewModel.VisitsFooter = visitsFooter + 1;
         }
 
     }
